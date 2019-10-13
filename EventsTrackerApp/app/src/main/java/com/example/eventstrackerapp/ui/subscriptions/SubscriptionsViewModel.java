@@ -1,16 +1,16 @@
-package com.example.eventstrackerapp.ui.tools;
+package com.example.eventstrackerapp.ui.subscriptions;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ToolsViewModel extends ViewModel {
+public class SubscriptionsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ToolsViewModel() {
+    public SubscriptionsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is tools fragment");
+        mText.setValue("This is subscriptions fragment");
     }
 
     public LiveData<String> getText() {

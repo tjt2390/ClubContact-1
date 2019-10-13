@@ -1,16 +1,16 @@
-package com.example.eventstrackerapp.ui.gallery;
+package com.example.eventstrackerapp.ui.carpool;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class CarpoolViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public CarpoolViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mText.setValue("This is carpool fragment");
     }
 
     public LiveData<String> getText() {

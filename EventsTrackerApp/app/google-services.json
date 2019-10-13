@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "204288527118",
+    "firebase_url": "https://eventstracker-a21f9.firebaseio.com",
+    "project_id": "eventstracker-a21f9",
+    "storage_bucket": "eventstracker-a21f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204288527118:android:3f5d6218244598de99255f",
+        "android_client_info": {
+          "package_name": "com.example.eventstrackerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204288527118-nfvroe4hva1gj9j2pgfr84am443ekkli.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eventstrackerapp",
+            "certificate_hash": "85b54b17ccaee86f2ba8b4577364a1f2983de1b4"
+          }
+        },
+        {
+          "client_id": "204288527118-6d39aq4km3fjsdho0bgqi3hsfk33ml4s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcPpVc_SCBGK4tr60jE4mxnOqOG2jboDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204288527118-6d39aq4km3fjsdho0bgqi3hsfk33ml4s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

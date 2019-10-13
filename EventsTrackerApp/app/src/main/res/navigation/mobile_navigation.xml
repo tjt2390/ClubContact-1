@@ -12,22 +12,22 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.eventstrackerapp.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_calendar"
+        android:name="com.example.eventstrackerapp.ui.calendar.CalendarFragment"
+        android:label="@string/menu_calendar"
+        tools:layout="@layout/fragment_calendar" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.eventstrackerapp.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_carpool"
+        android:name="com.example.eventstrackerapp.ui.carpool.CarpoolFragment"
+        android:label="@string/menu_carpool"
+        tools:layout="@layout/fragment_carpool" />
 
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.example.eventstrackerapp.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        android:id="@+id/nav_subscriptions"
+        android:name="com.example.eventstrackerapp.ui.subscriptions.SubscriptionsFragment"
+        android:label="@string/menu_subscriptions"
+        tools:layout="@layout/fragment_subscriptions" />
 
     <fragment
         android:id="@+id/nav_share"

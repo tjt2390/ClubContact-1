@@ -5,8 +5,10 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
+
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
+    <string name="action_logout">Logout</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_calendar">Calendar</string>
@@ -14,4 +16,14 @@
     <string name="menu_subscriptions">Subscriptions</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+
+    <string name="btn_signup">Create Account</string>
+    <string name="btn_login">Login</string>
+    <string name="et_email">Email</string>
+    <string name="et_password">Password</string>
+    <string name="et_first_name">First Name</string>
+    <string name="et_last_name">Last Name</string>
+    <string name="et_grad_year">Graduation Year</string>
+    <string name="tv_goto_signup">Are you a new user? Click here</string>
+    <string name="tv_goto_login">Already have an account? Click here</string>
 </resources>

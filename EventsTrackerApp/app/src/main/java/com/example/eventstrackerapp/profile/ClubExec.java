@@ -7,7 +7,7 @@ public class ClubExec extends User {
 
     public ClubExec(String username)
     {
-        super(username, "CLUB_EXEC");
+        super(username, "exec");
     }
 
     public Club getClub()

@@ -1,19 +1,25 @@
 package com.example.eventstrackerapp.profile;
 import java.util.ArrayList;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+
 public class User {
     private String name;
     //private ArrayList<Event> rsvpList;
     private ArrayList<Club> clubList;
     private int gradYear;
+    private String email;
     private String username, password;
     //private ArrayList<Carpool> carList;
     private String userType;
     //NOTE: Use DatabaseReference class to connect to Firebase
+    private DatabaseReference databaseReference;
+    private ArrayList<Task> tasks;
 
     public User(String userName)
     {
-        this(userName, "USER");
+        this(userName, "user");
     }
 
     public User(String username, String userType)
@@ -45,5 +51,9 @@ public class User {
     public String getUserType()
     {
         return userType;
+    }
+    private String getEmail()
+    {
+        return email;
     }
 }

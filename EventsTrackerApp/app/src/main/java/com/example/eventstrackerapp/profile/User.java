@@ -23,7 +23,7 @@ public class User {
     }
 
     /**
-     *
+     * Constructor
      * @param username
      * @param userType
      */

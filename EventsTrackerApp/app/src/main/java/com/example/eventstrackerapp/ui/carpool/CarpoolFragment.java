@@ -1,9 +1,11 @@
 package com.example.eventstrackerapp.ui.carpool;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,13 +25,16 @@ public class CarpoolFragment extends Fragment {
         carpoolViewModel =
                 ViewModelProviders.of(this).get(CarpoolViewModel.class);
         View root = inflater.inflate(R.layout.fragment_carpool, container, false);
-        final TextView textView = root.findViewById(R.id.text_carpool);
-        carpoolViewModel.getText().observe(this, new Observer<String>() {
+
+        Button campusCarpool = (Button) root.findViewById(R.id.campusCarpoolButton);
+        campusCarpool.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onClick(View v) {
+                Intent gotoCampusCarpool = new Intent(getContext(), CampusCarpoolActivity.class);
+                startActivity(gotoCampusCarpool);
             }
         });
+
         return root;
     }
 }

@@ -22,6 +22,11 @@ public class User {
         this(userName, "user");
     }
 
+    /**
+     *
+     * @param username
+     * @param userType
+     */
     public User(String username, String userType)
     {
         this.username = username;

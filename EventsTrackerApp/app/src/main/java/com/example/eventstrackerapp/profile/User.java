@@ -1,64 +1,84 @@
 package com.example.eventstrackerapp.profile;
-import java.util.ArrayList;
-
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
 
 public class User {
-    private String name;
-    //private ArrayList<Event> rsvpList;
-    private ArrayList<Club> clubList;
-    private int gradYear;
+    private String userID;
     private String email;
-    private String username, password;
-    //private ArrayList<Carpool> carList;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private int gradYear;
     private String userType;
-    //NOTE: Use DatabaseReference class to connect to Firebase
-    private DatabaseReference databaseReference;
-    private ArrayList<Task> tasks;
 
-    public User(String userName)
-    {
-        this(userName, "user");
-    }
+    public User(){}
 
-    /**
-     * Constructor
-     * @param username
-     * @param userType
-     */
-    public User(String username, String userType)
-    {
-        this.username = username;
+    public User(String userID, String userType){
+        this.userID = userID;
         this.userType = userType;
     }
 
-    public String getName()
-    {
-        return name;
+    public User(String email, String password, String firstName, String lastName, int gradYear, String userType, String userID) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gradYear = gradYear;
+        this.userType = userType;
+        this.userID = userID;
     }
 
-    public int getGradYear()
-    {
-        return gradYear;
+    public String getEmail() {
+        return email;
     }
 
-    public String getUsername()
-    {
-        return username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
-    public String getUserType()
-    {
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getGradYear() {
+        return gradYear;
+    }
+
+    public void setGradYear(int gradYear) {
+        this.gradYear = gradYear;
+    }
+
+    public String getUserType() {
         return userType;
     }
-    private String getEmail()
-    {
-        return email;
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

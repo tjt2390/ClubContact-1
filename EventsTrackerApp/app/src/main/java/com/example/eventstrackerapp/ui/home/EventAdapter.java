@@ -1,6 +1,7 @@
 package com.example.eventstrackerapp.ui.home;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,9 +55,9 @@ public class EventAdapter extends BaseAdapter {
         View v = mInflater.inflate(R.layout.home_event_details_list, null);
         TextView nameTV = v.findViewById(R.id.home_event_name);
         TextView locationTV = v.findViewById(R.id.home_event_location);
-        TextView hostsTV = v.findViewById(R.id.home_event_clubs);
-        TextView sTimeDateTV = v.findViewById(R.id.home_event_start);
-        TextView eTimeDateTV = v.findViewById(R.id.home_event_end);
+        TextView hostsTV = v.findViewById(R.id.home_event_hosts);
+        TextView timeTV = v.findViewById(R.id.home_event_time);
+        TextView dateTV = v.findViewById(R.id.home_event_date);
 
         String name = events.get(position);
         String loc = locations.get(position);
@@ -70,17 +71,18 @@ public class EventAdapter extends BaseAdapter {
         ArrayList<String> eventHosts = hosts.get(position);
         for(String host : eventHosts){
             clubHosts += host;
-            if(eventHosts.size() > 1){
+            if(eventHosts.indexOf(host) != eventHosts.size()-1){
                 clubHosts += ", ";
             }
+            else{break;}
         }
 
-        nameTV.append(name);
+        nameTV.setText(name);
         locationTV.append(loc);
-        sTimeDateTV.append(stime + "\t\t\t" + sdate);
-        eTimeDateTV.append(etime + "\t\t\t" + edate);
+        timeTV.append(stime + "-" + etime);
+        dateTV.append(sdate + "-" + edate);
         hostsTV.append(clubHosts);
 
-        return null;
+        return v;
     }
 }

@@ -76,9 +76,9 @@ public class ProfileActivity extends AppCompatActivity {
                     int year = user.getGradYear();
                     String type = user.getUserType();
 
-                    userID.setText("Name: " + username);
-                    textViewPassword.setText("Username: " + password);
-                    textViewName.setText("Password: " + name);
+                    userID.setText("Name: " + name);
+                    textViewPassword.setText("Username: " + username);
+                    textViewName.setText("Password: " + password);
                     textViewEmail.setText("Email: " + email);
                     textViewGradYear.setText("Graduation Year: " + year);
                     textViewUserType.setText("User Type: " + type);

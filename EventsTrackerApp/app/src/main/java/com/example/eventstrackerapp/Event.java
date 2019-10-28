@@ -11,10 +11,12 @@ public class Event {
     private String startTime;
     private String endTime;
     private ArrayList<String> hosts;
+    private String description;
 
     public Event(){ }
 
-    public Event(String eventID, String title, String location, String startDate, String endDate, String startTime, String endTime, ArrayList<String> hosts) {
+    public Event(String eventID, String title, String location, String startDate, String endDate,
+                 String startTime, String endTime, ArrayList<String> hosts, String description) {
         this.eventID = eventID;
         this.title = title;
         this.location = location;
@@ -23,6 +25,7 @@ public class Event {
         this.startTime = startTime;
         this.endTime = endTime;
         this.hosts = hosts;
+        this.description = description;
     }
 
     public String getTitle() {
@@ -76,4 +79,8 @@ public class Event {
     public void setHosts(ArrayList<String> hosts) {
         this.hosts = hosts;
     }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
 }

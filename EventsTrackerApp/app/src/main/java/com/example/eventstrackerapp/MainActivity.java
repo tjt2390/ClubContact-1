@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -37,6 +38,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
@@ -118,6 +121,28 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_search:
                 // if the user chooses the Search item, show search UI
+                return true;
+            case R.id.action_add_event:
+                // CREATE AN EVENT
+                ArrayList<String> hosts = new ArrayList<>();
+                hosts.add("XPD");
+                //hosts.add("Sustainability");
+                Event newEvent = new Event("Career Fair", "Career Fair", "Gorecki", "11/6/19",
+                        "11/6/19", "6:00pm", "9:00pm", hosts, "This event is to discuss about the career fair.");
+                // ADD THE EVENT TO THE DATABASE
+                CollectionReference eventsRef = firebaseFirestore.collection("Events");
+                eventsRef.document("Career Fair").set(newEvent).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MainActivity.this,"Event saved", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this,"Error!", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, e.toString());
+                    }
+                });
                 return true;
             case R.id.action_logout:
                 mAuth.signOut();

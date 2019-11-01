@@ -1,4 +1,4 @@
-package com.example.eventstrackerapp.ui.home;
+package com.example.eventstrackerapp.ui.home.upcoming.details;
 
 import androidx.appcompat.app.AppCompatActivity;
 

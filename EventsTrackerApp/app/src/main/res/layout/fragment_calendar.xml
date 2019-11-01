@@ -25,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorWhite"
             android:text="@string/current_date"
             android:layout_marginTop="4dp"
             android:textStyle="bold"
@@ -39,20 +39,11 @@
             android:src="@drawable/right_arrow"
             android:layout_weight="1"/>
     </LinearLayout>
-    <Button
-        android:id="@+id/add_calendar_event"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="12sp"
-        android:text="@string/add_event"
-        android:gravity="center"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:paddingBottom="4dp"
-        android:paddingTop="4dp"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/sun"
@@ -137,4 +128,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="7"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_calendar_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 </LinearLayout>

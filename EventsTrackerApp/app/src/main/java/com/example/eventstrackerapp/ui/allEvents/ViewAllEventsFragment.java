@@ -23,7 +23,7 @@ public class ViewAllEventsFragment extends Fragment {
         viewAllEventsViewModel =
                 ViewModelProviders.of(this).get(ViewAllEventsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_viewallusers, container, false);
-        final TextView textView = root.findViewByld(R.id.nav_viewAllEvents);
+        final TextView textView = root.findViewById(R.id.nav_viewAllEvents);
         viewAllEventsViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s){

@@ -4,12 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.eventstrackerapp.profile.ProfileActivity;
+import com.example.eventstrackerapp.profile.User;
+import com.example.eventstrackerapp.ui.home.HomeFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -17,6 +25,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -25,11 +37,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "MainActivity";
     private AppBarConfiguration mAppBarConfiguration;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore firebaseFirestore;
+    private CollectionReference usersRef;
 
     // This method activates when screen (activity_main.xml) pops up
     // It sets up everything
@@ -39,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         mAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        usersRef = firebaseFirestore.collection("Users");
 
         // Sets up the circular icon with the mail pic on the bottom right of screen
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -51,33 +72,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Sets up the side bar
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-
-        // Profile Navigation goes down here
-        View headView = navigationView.getHeaderView(0);
-        ImageView imgProfile= (ImageView) headView.findViewById(R.id.imgProfile);
-        imgProfile.setOnClickListener(new View.OnClickListener(){
+        // THIS IS WHERE YOU DETERMINE WHAT SCREEN YOU GET DEPENDING ON THE USER TYPE
+        String currentUserType = mAuth.getCurrentUser().getUid();
+        DocumentReference documentReference = usersRef.document(currentUserType);
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View view){
-                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+
+                String userType = user.getUserType();
+                if(userType.equals("default")){
+                    navigationSetupDefault(); // Give the user a navigation screen without the Events and Users tab
+                }
+                else if(userType.equals("admin")){
+                    // Give the user a navigation screen with the Events or Users tab
+                    navigationSetupAdmin();
+                }
+                else if(userType.equals("executive")){
+                    // Give the user a navigation screen without the Events tabs but with a Club-Events tab
+                }
+                else{
+                    Toast.makeText(MainActivity.this,"Error! Type = " + user.getUserType(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity.this,"Error!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, e.toString());
             }
         });
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        // NOTE: this is where you add the fragments/screens you want to go to
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_calendar, R.id.nav_carpool,
-                R.id.nav_subscriptions, R.id.nav_share, R.id.nav_send,
-                R.id.nav_viewAllUsers)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-
     }
 
     // This method creates the menu (upper-right of screen/three dots)
@@ -116,4 +140,69 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    /**
+     * This method sets up a side bar/navigation bar without the Events, Users, or Club-Events tabs.
+     */
+    public void navigationSetupDefault(){
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        // Profile Navigation goes down here
+        View headView = navigationView.getHeaderView(0);
+        ImageView imgProfile= (ImageView) headView.findViewById(R.id.imgProfile);
+        imgProfile.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            }
+        });
+
+        /**
+         * This is where you set the names of the tabs you created. Names should be stored in
+         * mobile_navigation.xml which is found in 'res -> navigation'
+         */
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_calendar, R.id.nav_carpool, // names are set and found in res -> navigation file
+                R.id.nav_subscriptions, R.id.nav_share, R.id.nav_send)
+                .setDrawerLayout(drawer).build();
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+    }
+  
+  /**
+     * This method sets up a side bar/navigation bar without the Events, Users, or Club-Events tabs.
+     */
+    public void navigationSetupAdmin(){
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        // Profile Navigation goes down here
+        View headView = navigationView.getHeaderView(0);
+        ImageView imgProfile= (ImageView) headView.findViewById(R.id.imgProfile);
+        imgProfile.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            }
+        });
+
+        /**
+         * This is where you set the names of the tabs you created. Names should be stored in
+         * mobile_navigation.xml which is found in 'res -> navigation'
+         */
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_calendar, R.id.nav_carpool,
+                R.id.nav_subscriptions, R.id.nav_share, R.id.nav_send,
+                R.id.nav_viewAllUsers)
+                .setDrawerLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+
 }

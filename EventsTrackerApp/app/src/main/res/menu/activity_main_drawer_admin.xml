@@ -12,14 +12,22 @@
             android:icon="@drawable/ic_menu_calendar"
             android:title="@string/menu_calendar" />
         <item
-        android:id="@+id/nav_carpool"
-        android:icon="@drawable/ic_menu_carpool"
-        android:title="@string/menu_carpool" />
+            android:id="@+id/nav_carpool"
+            android:icon="@drawable/ic_menu_carpool"
+            android:title="@string/menu_carpool" />
 
         <item
             android:id="@+id/nav_subscriptions"
             android:icon="@drawable/ic_menu_subscriptions"
             android:title="@string/menu_subscriptions" />
+        <item
+            android:id="@+id/nav_viewAllUsers"
+            android:icon="@drawable/ic_all_users"
+            android:title="@string/nav_all_users" />
+        <item
+            android:id="@+id/nav_viewAllEvents"
+            android:icon="@drawable/ic_all_events"
+            android:title="@string/nav_all_events" />
     </group>
 
     <item android:title="Communicate">

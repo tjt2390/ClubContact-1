@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(userType.equals("admin")){
                     // Give the user a navigation screen with the Events or Users tab
+                    navigationSetupAdmin();
                 }
                 else if(userType.equals("executive")){
                     // Give the user a navigation screen without the Events tabs but with a Club-Events tab
@@ -101,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, e.toString());
             }
         });
-
     }
 
     // This method creates the menu (upper-right of screen/three dots)
@@ -167,6 +167,38 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_subscriptions, R.id.nav_share, R.id.nav_send)
                 .setDrawerLayout(drawer).build();
 
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+    }
+  
+  /**
+     * This method sets up a side bar/navigation bar without the Events, Users, or Club-Events tabs.
+     */
+    public void navigationSetupAdmin(){
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        // Profile Navigation goes down here
+        View headView = navigationView.getHeaderView(0);
+        ImageView imgProfile= (ImageView) headView.findViewById(R.id.imgProfile);
+        imgProfile.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            }
+        });
+
+        /**
+         * This is where you set the names of the tabs you created. Names should be stored in
+         * mobile_navigation.xml which is found in 'res -> navigation'
+         */
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_calendar, R.id.nav_carpool,
+                R.id.nav_subscriptions, R.id.nav_share, R.id.nav_send,
+                R.id.nav_viewAllUsers)
+                .setDrawerLayout(drawer)
+                .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);

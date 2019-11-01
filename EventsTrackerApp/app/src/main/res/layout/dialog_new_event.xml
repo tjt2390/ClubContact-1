@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/holo_orange_light"
+    android:padding="10dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dia_event_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:imeOptions="actionNext"
+            android:hint="Title"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/description_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dia_event_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:hint="Description"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/location_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dia_event_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:hint="Location"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/host_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dia_event_host"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:hint="Host"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/set_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:text="SET"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/dia_start_time_textview"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:hint="Starting Time"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/set_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="205dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:text="SET"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/dia_end_time_textview"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:hint="Ending Time"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="240dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDarkGray"
+        android:layout_marginTop="10dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/set_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:text="SET"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/dia_start_date_textview"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:hint="Starting Date"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/set_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="205dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:text="SET"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/dia_end_date_textview"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:hint="Ending Date"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="240dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="15sp"
+            android:text="CREATE"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="15sp"
+            android:text="CANCEL"
+            android:layout_toLeftOf="@+id/create"
+            android:layout_marginRight="35dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -5,8 +5,11 @@ import android.os.Bundle;
 
 import com.example.eventstrackerapp.profile.ProfileActivity;
 import com.example.eventstrackerapp.profile.User;
+import com.example.eventstrackerapp.ui.home.HomeFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -25,10 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -40,8 +40,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-
-import javax.annotation.Nullable;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -58,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         usersRef = firebaseFirestore.collection("Users");
@@ -122,28 +122,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_search:
                 // if the user chooses the Search item, show search UI
                 return true;
-            case R.id.action_add_event:
-                // CREATE AN EVENT
-                ArrayList<String> hosts = new ArrayList<>();
-                hosts.add("XPD");
-                //hosts.add("Sustainability");
-                Event newEvent = new Event("Career Fair", "Career Fair", "Gorecki", "11/6/19",
-                        "11/6/19", "6:00pm", "9:00pm", hosts, "This event is to discuss about the career fair.");
-                // ADD THE EVENT TO THE DATABASE
-                CollectionReference eventsRef = firebaseFirestore.collection("Events");
-                eventsRef.document("Career Fair").set(newEvent).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(MainActivity.this,"Event saved", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this,"Error!", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, e.toString());
-                    }
-                });
-                return true;
             case R.id.action_logout:
                 mAuth.signOut();
                 finish();
@@ -193,4 +171,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
+
+
 }

@@ -1,4 +1,4 @@
-package com.example.eventstrackerapp.ui.home;
+package com.example.eventstrackerapp.ui.home.upcoming.details;
 
 import android.content.Context;
 import android.util.Log;
@@ -58,23 +58,5 @@ public class EventDetailsHostAdapter extends BaseAdapter {
         });
 
         return v;
-    }
-
-    public void setView(int position, LinearLayout parent) {
-        View v = mInflater.inflate(R.layout.activity_event_details_host, parent);
-        TextView hostNameTV = v.findViewById(R.id.event_details_host_name);
-        Button subscribe = v.findViewById(R.id.event_details_subscribe_button);
-
-        String hostName = hosts.get(position);
-        Log.i(TAG, "ArrayList Element2: " + hosts.get(position));
-
-        hostNameTV.setText(hostName);
-
-        subscribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // ToDo: SAVE NAME OF HOST TO THE SUBSCRIPTIONS LIST HERE
-            }
-        });
     }
 }

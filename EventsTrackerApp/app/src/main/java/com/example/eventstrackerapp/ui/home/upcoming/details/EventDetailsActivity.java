@@ -1,0 +1,102 @@
+package com.example.eventstrackerapp.ui.home.upcoming.details;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.example.eventstrackerapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+
+public class EventDetailsActivity extends AppCompatActivity {
+
+    // ========================= INSTANCE VARIABLES =========================
+    private static final String TAG = "EventDetailsActivity";
+    FirebaseFirestore firebaseFirestore;
+    private CollectionReference eventsRef;
+    LinearLayout hostsLayout;
+
+    // ========================= CREATE METHOD =========================
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_event_details);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        eventsRef = firebaseFirestore.collection("Events");
+        hostsLayout = findViewById(R.id.event_details_hosts_layout);
+
+        // FETCH THE INFORMATION FROM HOMEFRAGMENT.JAVA
+        Intent in = getIntent();
+        int index = in.getIntExtra("com.example.eventstrackerapp.ui.home.EVENT_INDEX", -1);
+        String title = in.getStringExtra("com.example.eventstrackerapp.ui.home.EVENT_NAME");
+        String location = in.getStringExtra("com.example.eventstrackerapp.ui.home.EVENT_LOCATION");
+        String start = in.getStringExtra("com.example.eventstrackerapp.ui.home.EVENT_START");
+        String end = in.getStringExtra("com.example.eventstrackerapp.ui.home.EVENT_END");
+        String eventID = in.getStringExtra("com.example.eventstrackerapp.ui.home.EVENT_ID");
+
+
+        if(index > -1){ // if the user chooses an event that exists in the homepage
+            setEventInfo(title, location, start, end, eventID);
+        }
+    }
+
+    // ========================= OTHER METHODS =========================
+    private void setEventInfo(String title, String location, String start, String end, String eventID){
+        // GET THE TEXTVIEWS OF THE TITLE, LOCATION, START AND END TIMES, AND DESCRIPTION
+        TextView titleTV = findViewById(R.id.event_details_name);
+        TextView locationTV = findViewById(R.id.event_details_location);
+        TextView startEndTV = findViewById(R.id.event_details_time_date);
+        final TextView descriptionTV = findViewById(R.id.event_details_description);
+
+        // SETUP THE TITLE, LOCATION, START, AND END TIMES
+        titleTV.setText(title);
+        locationTV.setText(location);
+        startEndTV.setText(start + "\n" + end);
+
+        // USE THE EVENTID TO ACCESS THE DATABASE FOR THE EVENT'S DESCRIPTION AND HOSTS
+        eventsRef.document(eventID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot documentSnapshot = task.getResult();
+
+                // ADD DESCRIPTION
+                descriptionTV.setText((String)documentSnapshot.get("description"));
+
+                // ADD HOST NAMES AND THEIR SUBSCRIPTION BUTTONS
+                ArrayList<String> hosts = (ArrayList<String>) documentSnapshot.get("hosts");
+                EventDetailsHostAdapter eventDetailsHostAdapter = new EventDetailsHostAdapter(getApplicationContext(), hosts);
+                for(int i=0; i<hosts.size(); i++){
+                    View v = eventDetailsHostAdapter.getView(i, null, null);
+                    hostsLayout.addView(v);
+                }
+            }
+        });
+    }
+
+    public void fabAddToCalendar(View view){
+        Snackbar.make(view, "The event has been added to your calendar", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    public void fabRSVP(View view){
+        Snackbar.make(view, "The event has been added to your rsvp-list", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    public void fabAddToCarpool(View view){
+        Snackbar.make(view, "The event has been added to your carpool list", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+}

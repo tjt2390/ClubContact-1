@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         // NOTE: this is where you add the fragments/screens you want to go to
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_calendar, R.id.nav_carpool,
-                R.id.nav_subscriptions, R.id.nav_share, R.id.nav_send)
+                R.id.nav_subscriptions, R.id.nav_share, R.id.nav_send,
+                R.id.nav_viewAllUsers)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);

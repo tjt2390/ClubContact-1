@@ -23,7 +23,7 @@ public class ViewAllUsersFragment extends Fragment {
         viewAllUsersViewModel =
                 ViewModelProviders.of(this).get(ViewAllUsersViewModel.class);
         View root = inflater.inflate(R.layout.fragment_viewallusers, container, false);
-        final TextView textView = root.findViewByld(R.id.text_viewAllUsers);
+        final TextView textView = root.findViewById(R.id.text_viewAllUsers);
         viewAllUsersViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s){

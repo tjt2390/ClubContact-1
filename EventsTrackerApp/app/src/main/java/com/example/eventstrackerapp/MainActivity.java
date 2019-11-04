@@ -3,6 +3,7 @@ package com.example.eventstrackerapp;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.eventstrackerapp.authentication.LoginActivity;
 import com.example.eventstrackerapp.profile.ProfileActivity;
 import com.example.eventstrackerapp.profile.User;
 import com.example.eventstrackerapp.ui.home.HomeFragment;
@@ -49,59 +50,103 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private CollectionReference usersRef;
 
+    private String myUserType;
+
     // This method activates when screen (activity_main.xml) pops up
     // It sets up everything
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         usersRef = firebaseFirestore.collection("Users");
+        myUserType = "";
 
-        // Sets up the circular icon with the mail pic on the bottom right of screen
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        super.onCreate(savedInstanceState);
 
-        // THIS IS WHERE YOU DETERMINE WHAT SCREEN YOU GET DEPENDING ON THE USER TYPE
-        String currentUserType = mAuth.getCurrentUser().getUid();
-        DocumentReference documentReference = usersRef.document(currentUserType);
+        /**
+         * -----------------------------------------------------------------------------------------------------------------------
+         */
+
+        String currentUser = mAuth.getCurrentUser().getUid();
+
+        final DocumentReference documentReference = usersRef.document(currentUser);
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
+                myUserType = user.getUserType();
 
-                String userType = user.getUserType();
-                if(userType.equals("default")){
-                    navigationSetupDefault(); // Give the user a navigation screen without the Events and Users tab
+                /**
+                 * -----------------------------------------------------------------------------------------------------------------------
+                 */
+
+                // THIS IS WHERE YOU DETERMINE WHAT SCREEN YOU GET DEPENDING ON THE USER TYPE
+
+                switch (myUserType){
+                    case "default":
+                        setContentView(R.layout. activity_main);
+                        Toolbar toolbar = findViewById(R.id.toolbar);
+                        setSupportActionBar(toolbar);
+                        navigationSetupDefault();
+                        break ;
+                    case "admin":
+                        setContentView(R.layout. activity_main_admin);
+                        Toolbar toolbar2 = findViewById(R.id.toolbar);
+                        setSupportActionBar(toolbar2);
+                        navigationSetupAdmin();
+                        break;
+                    default:
+                        Log.d(TAG, "onCreate: Cannot find user type");
+                        break;
                 }
-                else if(userType.equals("admin")){
-                    // Give the user a navigation screen with the Events or Users tab
-                    navigationSetupAdmin();
-                }
-                else if(userType.equals("executive")){
-                    // Give the user a navigation screen without the Events tabs but with a Club-Events tab
-                }
-                else{
-                    Toast.makeText(MainActivity.this,"Error! Type = " + user.getUserType(), Toast.LENGTH_SHORT).show();
-                }
+
+                /**
+                 * -----------------------------------------------------------------------------------------------------------------------
+                 */
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this,"Error!", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, e.toString());
+                Log.d(TAG, "onFailure: Failed to get Document");
             }
         });
+        /**
+         * -----------------------------------------------------------------------------------------------------------------------
+         */
+
+
+//        // THIS IS WHERE YOU DETERMINE WHAT SCREEN YOU GET DEPENDING ON THE USER TYPE
+//        String currentUserType = mAuth.getCurrentUser().getUid();
+//        DocumentReference documentReference = usersRef.document(currentUserType);
+//        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                User user = documentSnapshot.toObject(User.class);
+//
+//                String userType = user.getUserType();
+//                if(userType.equals("default")){
+//                    navigationSetupDefault(); // Give the user a navigation screen without the Events and Users tab
+//                }
+//                else if(userType.equals("admin")){
+//                    // Give the user a navigation screen with the Events or Users tab
+//                    navigationSetupAdmin();
+//                }
+//                else if(userType.equals("executive")){
+//                    // Give the user a navigation screen without the Events tabs but with a Club-Events tab
+//                }
+//                else{
+//                    Toast.makeText(MainActivity.this,"Error! Type = " + user.getUserType(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(MainActivity.this,"Error!", Toast.LENGTH_SHORT).show();
+//                Log.d(TAG, e.toString());
+//            }
+//        });
     }
 
     // This method creates the menu (upper-right of screen/three dots)
@@ -203,6 +248,5 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
-
 
 }
